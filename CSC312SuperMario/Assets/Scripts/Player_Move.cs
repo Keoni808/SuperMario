@@ -20,6 +20,8 @@ public class Player_Move : MonoBehaviour
 
         animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
 
+        PlayerRaycast();
+
         if (Input.GetButtonDown("Jump")){
             jump = true;
             animator.SetBool("isJumping", true);
@@ -40,6 +42,13 @@ public class Player_Move : MonoBehaviour
     {
         controller.Move(horizontalMove * Time.fixedDeltaTime, crouch, jump);
         jump = false;
+    }
+
+    void PlayerRaycast(){
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down);
+        if(hit.collider.tag == "Enemy" && hit.distance < .1){
+            Destroy(hit.collider.gameObject);
+        }
     }
 
 }

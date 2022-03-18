@@ -4,19 +4,27 @@ using UnityEngine;
 
 public class EnemyBehaviour : MonoBehaviour
 {
-
+    
     public float moveSpeed = 1f;
     public float range = 0.1f;
     private bool movingRight = true;
-
+    
     public Transform wallDetection;
+    
+    private bool isDead;
+    public float goombaHealth = 1f;
+    public float damageTaken = 1f;
 
     private void Start() {
-        
+        isDead = false;
     }
 
     public void takeDamage(){
-        
+        goombaHealth -= damageTaken;
+        if (goombaHealth == 0){
+            isDead = true;
+            Destroy(gameObject);
+        }
     }
     
 
@@ -42,7 +50,7 @@ public class EnemyBehaviour : MonoBehaviour
     }
 
     void OnCollisionEnter2D(Collision2D other){
-        
+        takeDamage();
     }
 
     void OnCollisionStay2D(Collision2D other){
