@@ -4,21 +4,26 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    // Start is called before the first frame update
-    private float health = 0f;
-    [SerializeField] private float maxHealth = 1f;
+    private bool hasDied;
+    private float health = 0.0f;
 
     private void Start() {
-        health = maxHealth;
+        hasDied = false;
     }
 
-    public void updateHealth(float mod){
-        health += mod;
+    private void Update() {
+        if(gameObject.transform.position.y < -3){
+            hasDied = true;
+        }
+        playerDies();
+    }
 
-        if (health > maxHealth) {
-            health = maxHealth;
-        } else if (health <= 0f){
-            health = 0f;
+    public void updateHealth(){
+
+    }
+
+    void playerDies(){
+        if(hasDied){
             Destroy(gameObject);
         }
     }
